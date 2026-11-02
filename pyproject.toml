@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bountygang"
+version = "0.1.0"
+description = "Backend-only autonomous AI bug bounty research & IDOR detection agent for Windows (Telegram is the only UI)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "harshitgavita-07" }]
+dependencies = [
+    "SQLAlchemy>=2.0",
+    "pydantic>=2.5",
+    "pydantic-settings>=2.1",
+    "httpx>=0.27",
+    "typer>=0.12",
+    "rich>=13.0",
+    "Jinja2>=3.1",
+    "python-telegram-bot>=21.0",
+    "playwright>=1.44; platform_system != 'Windows'",
+    "playwright>=1.44; platform_system == 'Windows'",
+]
+
+[project.optional-dependencies]
+windows = ["pywinauto>=0.6.8"]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+bountygang = "bountygang.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["bountygang*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-q"
